@@ -69,7 +69,7 @@
   </div>
 
   <div id="inputSection">
-    <h2>Tell me one thing you love about me 💬</h2>
+    <h2>Tell me one thing you love about me</h2>
     <textarea id="userInput" rows="4" placeholder="Type anything..."></textarea>
     <br><br>
     <button id="submitBtn">Submit</button>
@@ -95,19 +95,19 @@
       let subtext = document.getElementById("subtext");
 
       if (step === 1) {
-        question.innerText = "Are you sure? 🤨";
+        question.innerText = "Are you sure?";
         subtext.innerText = "No going back...";
       }
       else if (step === 2) {
-        question.innerText = "Like REALLY sure?? 😭";
+        question.innerText = "Like REALLY sure??";
         subtext.innerText = "Final answer...";
       }
       else if (step === 3) {
-        question.innerText = "Okay last chance 😤";
+        question.innerText = "Okay last chance";
         subtext.innerText = "";
       }
       else {
-        question.innerText = "AYYYYY 😎🔥";
+        question.innerText = "Yippppppppppppppppppppppeeeeeeeeeeeeeeeeee";
         subtext.innerText = "";
 
         document.getElementById("buttonContainer").style.display = "none";
@@ -134,7 +134,7 @@
       let text = document.getElementById("userInput").value;
 
       if (text.trim() === "") {
-        document.getElementById("response").innerText = "Type something 😤";
+        document.getElementById("response").innerText = "Type something";
         return;
       }
 
@@ -150,7 +150,7 @@
         body: entryID + "=" + encodeURIComponent(text)
       });
 
-      document.getElementById("response").innerText = "Sent 😎";
+      document.getElementById("response").innerText = "Sent";
       document.getElementById("userInput").value = "";
     }
   </script>
@@ -158,4 +158,5 @@
 </body>
 
 </html>
+
 
