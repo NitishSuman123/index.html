@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Ask</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 80px;
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    #buttonContainer {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+    }
+
+    textarea {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #inputSection {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 id="question">Do you love me?</h1>
+  <p id="subtext">Choose wisely...</p>
+
+  <div id="buttonContainer">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <div id="inputSection">
+    <h2>Tell me one thing you love about me</h2>
+    <textarea id="userInput" rows="4" placeholder="Type anything..."></textarea>
+    <br><br>
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <h2 id="response"></h2>
+
+  <script>
+    let step = 0;
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    yesBtn.addEventListener("click", nextStep);
+    noBtn.addEventListener("click", moveButton);
+    submitBtn.addEventListener("click", saveResponse);
+
+    function nextStep() {
+      step++;
+
+      let question = document.getElementById("question");
+      let subtext = document.getElementById("subtext");
+
+      if (step === 1) {
+        question.innerText = "Are you sure?";
+        subtext.innerText = "No going back...";
+      }
+      else if (step === 2) {
+        question.innerText = "Like REALLY sure??";
+        subtext.innerText = "Final answer...";
+      }
+      else if (step === 3) {
+        question.innerText = "Okay last chance";
+        subtext.innerText = "";
+      }
+      else {
+        question.innerText = "Yipppppppppppppeeeeeeeeeeeeeeeeee";
+        subtext.innerText = "";
+
+        document.getElementById("buttonContainer").style.display = "none";
+        document.getElementById("inputSection").style.display = "block";
+      }
+    }
+
+    function moveButton() {
+      let button = document.getElementById("noBtn");
+
+      button.style.position = "absolute";
+
+      let maxX = window.innerWidth - button.offsetWidth - 20;
+      let maxY = window.innerHeight - button.offsetHeight - 20;
+
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
+
+      button.style.left = x + "px";
+      button.style.top = y + "px";
+    }
+
+    function saveResponse() {
+      let text = document.getElementById("userInput").value;
+
+      if (text.trim() === "") {
+        document.getElementById("response").innerText = "Type something";
+        return;
+      }
+
+      let formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeU3PcsLrFny_kxh3dYYy4XFtImkGLPPZGBmgj0ldoVP160Hw/formResponse";
+      let entryID = "entry.393960033";
+
+      fetch(formURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: entryID + "=" + encodeURIComponent(text)
+      });
+
+      document.getElementById("response").innerText = "Sent";
+      document.getElementById("userInput").value = "";
+    }
+  </script>
+
+</body>
+</html>
